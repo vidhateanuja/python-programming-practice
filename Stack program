@@ -1,0 +1,161 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#define MAX 10
+struct stack {
+int items[MAX];
+int top;
+};
+typedef struct stack st;
+void createEmptyStaticStack(st *s) {
+s->top = -1;
+}
+int isFull(st *s) {
+return (s->top == MAX - 1);
+}
+int isEmpty(st *s) {
+
+return (s->top == -1);
+}
+void pushStatic(st *s, int newitem) {
+if (isFull(s)) {
+printf("Static Stack is FULL\n");
+} else {
+s->items[++(s->top)] = newitem;
+printf("Inserted (Static) -> %d\n", newitem);
+}
+}
+void popStatic(st *s) {
+if (isEmpty(s)) {
+printf("Static Stack is EMPTY\n");
+} else {
+printf("Popped (Static) -> %d\n", s->items[s->top--]);
+}
+}
+void peekStatic(st *s) {
+if (isEmpty(s)) {
+printf("Static Stack is EMPTY\n");
+} else {
+printf("Top element (Static): %d\n", s->items[s-
+>top]);
+}
+
+}
+void printStatic(st *s) {
+if (isEmpty(s)) {
+printf("Static Stack is EMPTY\n");
+} else {
+printf("Static Stack: ");
+for (int i = 0; i <= s->top; i++) {
+printf("%d ", s->items[i]);
+}
+printf("\n");
+}
+}
+struct node {
+int data;
+struct node *next;
+};
+typedef struct node Node;
+Node* pushDynamic(Node *top, int value) {
+Node *newNode = (Node*)malloc(sizeof(Node));
+newNode->data = value;
+newNode->next = top;
+printf("Inserted (Dynamic) -> %d\n", value);
+
+return newNode;
+}
+Node* popDynamic(Node *top) {
+if (top == NULL) {
+printf("Dynamic Stack is EMPTY\n");
+return NULL;
+} else {
+printf("Popped (Dynamic) -> %d\n", top->data);
+Node *temp = top;
+top = top->next;
+free(temp);
+return top;
+}
+}
+void peekDynamic(Node *top) {
+if (top == NULL) {
+printf("Dynamic Stack is EMPTY\n");
+} else {
+printf("Top element (Dynamic): %d\n", top->data);
+}
+}
+void printDynamic(Node *top) {
+if (top == NULL) {
+printf("Dynamic Stack is EMPTY\n");
+
+} else {
+Node *temp = top;
+printf("Dynamic Stack: ");
+while (temp != NULL) {
+printf("%d ", temp->data);
+temp = temp->next;
+}
+printf("\n");
+}
+}
+int main() {
+st s;
+createEmptyStaticStack(&s);
+Node *top = NULL;
+int choice, value, stackType;
+while (1) {
+printf("\n===== STACK IMPLEMENTATION
+=====\n");
+printf("1. Static Stack (Array)\n");
+printf("2. Dynamic Stack (Linked List)\n");
+printf("3. Exit\n");
+printf("Enter your choice: ");
+scanf("%d", &stackType);
+if (stackType == 3)
+break;
+
+while (1) {
+printf("\n--- STACK OPERATIONS ---\n");
+printf("1. Push\n2. Pop\n3. Peek\n4. Display\n5.
+Back\n");
+printf("Enter your choice: ");
+scanf("%d", &choice);
+if (choice == 5)
+break;
+switch (choice) {
+case 1:
+printf("Enter value to push: ");
+scanf("%d", &value);
+if (stackType == 1)
+pushStatic(&s, value);
+else
+top = pushDynamic(top, value);
+break;
+case 2:
+if (stackType == 1)
+popStatic(&s);
+else
+top = popDynamic(top);
+break;
+case 3:
+if (stackType == 1)
+peekStatic(&s);
+
+else
+peekDynamic(top);
+break;
+case 4:
+if (stackType == 1)
+printStatic(&s);
+else
+printDynamic(top);
+break;
+default:
+printf("Invalid choice!\n");
+}
+}
+}
+printf("\nExiting program...\n");
+getch(); // Hold screen for Turbo C
+return 0;
+}
