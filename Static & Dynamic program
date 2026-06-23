@@ -1,0 +1,145 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define SIZE 5 // maximum size for static queue
+// ---------- Static Queue (Array Implementation) ----------
+int queue[SIZE];
+int front = -1, rear = -1;
+// Function to insert element (Enqueue) in static queue
+void enqueue_static(int value) {
+if (rear == SIZE - 1)
+printf("\n[Static Queue] Queue Overflow!\n");
+else {
+if (front == -1) front = 0;
+rear++;
+queue[rear] = value;
+printf("[Static Queue] %d inserted.\n", value);
+}
+}
+// Function to delete element (Dequeue) from static queue
+void dequeue_static() {
+if (front == -1 || front > rear)
+printf("\n[Static Queue] Queue Underflow!\n");
+else {
+
+printf("[Static Queue] %d deleted.\n", queue[front]);
+front++;
+}
+}
+// Function to display static queue
+void display_static() {
+if (front == -1 || front > rear)
+printf("\n[Static Queue] Queue is Empty!\n");
+else {
+printf("\n[Static Queue Elements]: ");
+for (int i = front; i <= rear; i++)
+printf("%d ", queue[i]);
+printf("\n");
+}
+}
+// ---------- Dynamic Queue (Linked List Implementation) -
+---------
+struct Node {
+int data;
+struct Node *next;
+};
+struct Node *front_dyn = NULL, *rear_dyn = NULL;
+// Function to insert element (Enqueue) in dynamic queue
+void enqueue_dynamic(int value) {
+struct Node *newNode = (struct Node*)
+malloc(sizeof(struct Node));
+
+if (newNode == NULL) {
+printf("\n[Dynamic Queue] Memory Allocation
+Failed!\n");
+return;
+}
+newNode->data = value;
+newNode->next = NULL;
+if (rear_dyn == NULL)
+front_dyn = rear_dyn = newNode;
+else {
+rear_dyn->next = newNode;
+rear_dyn = newNode;
+}
+printf("[Dynamic Queue] %d inserted.\n", value);
+}
+// Function to delete element (Dequeue) from dynamic
+queue
+void dequeue_dynamic() {
+if (front_dyn == NULL)
+printf("\n[Dynamic Queue] Queue Underflow!\n");
+else {
+struct Node *temp = front_dyn;
+printf("[Dynamic Queue] %d deleted.\n", front_dyn-
+>data);
+front_dyn = front_dyn->next;
+free(temp);
+if (front_dyn == NULL)
+
+rear_dyn = NULL;
+}
+}
+// Function to display dynamic queue
+void display_dynamic() {
+if (front_dyn == NULL)
+printf("\n[Dynamic Queue] Queue is Empty!\n");
+else {
+struct Node *temp = front_dyn;
+printf("\n[Dynamic Queue Elements]: ");
+while (temp != NULL) {
+printf("%d ", temp->data);
+temp = temp->next;
+}
+printf("\n");
+}
+}
+// ---------- Main Function ----------
+int main() {
+int choice, value, method;
+while (1) {
+printf("\n====== Queue Operations ======\n");
+printf("1. Enqueue\n");
+printf("2. Dequeue\n");
+printf("3. Display\n");
+printf("4. Exit\n");
+printf("Choose operation: ");
+
+scanf("%d", &choice);
+if (choice == 4)
+break;
+printf("Select Method: 1. Static (Array) 2. Dynamic
+(Linked List)\n");
+scanf("%d", &method);
+switch (choice) {
+case 1:
+printf("Enter value to enqueue: ");
+scanf("%d", &value);
+if (method == 1)
+enqueue_static(value);
+else
+enqueue_dynamic(value);
+break;
+case 2:
+if (method == 1)
+dequeue_static();
+else
+dequeue_dynamic();
+break;
+case 3:
+if (method == 1)
+display_static();
+else
+display_dynamic();
+
+break;
+default:
+printf("Invalid choice!\n");
+}
+}
+printf("\nProgram Terminated.\n");
+return 0;
+}
+t)
+ Supports:
+✅ Enqueue
+✅ Dequeue
