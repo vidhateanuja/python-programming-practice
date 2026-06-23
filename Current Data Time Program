@@ -1,0 +1,9 @@
+#include<stdio.h>
+#include<conio.h>
+#include<time.h>
+void main(){
+time_tCurrentTime;
+time(&currentTime);
+printf("Current time:%s",c time(&currentTime));
+getch();
+}
